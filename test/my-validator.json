@@ -1,0 +1,19 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+        "eventTime": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "id": {
+            "type": "integer",
+            "minimum": 1
+        },
+        "name": {
+            "type": "string"
+        }
+    },
+    "required": ["eventTime", "id", "name"],
+    "additionalProperties": false
+}

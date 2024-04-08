@@ -1,0 +1,59 @@
+- rest:
+    id: rest-70ff
+    post:
+      - id: post-2bc7
+        path: test
+        to: direct:test
+- route:
+    id: route-1cb6
+    nodePrefixId: route-1fb
+    from:
+      id: from-2451
+      uri: direct
+      parameters:
+        name: test
+      steps:
+        - log:
+            id: log-b18c
+            message: ${body}
+        - doTry:
+            id: doTry-5e76
+            doCatch:
+              - id: doCatch-b711
+                exception:
+                  - >-
+                    org.apache.camel.component.jsonvalidator.JsonValidationException
+                steps:
+                  - log:
+                      id: log-2c75
+                      message: Body is not valid!!
+                      loggingLevel: WARN
+                  - setBody:
+                      id: setBody-9550
+                      expression:
+                        constant:
+                          id: constant-8551
+                          expression: Body is not valid!
+                  - setHeader:
+                      id: setHeader-d799
+                      name: CamelHttpResponseCode
+                      expression:
+                        constant:
+                          id: constant-72cf
+                          expression: "400"
+            steps:
+              - to:
+                  id: to-6caf
+                  uri: json-validator
+                  parameters:
+                    resourceUri: file:my-validator.json
+              - log:
+                  id: log-1add
+                  message: Body is valid!
+                  loggingLevel: INFO
+              - setBody:
+                  id: setBody-327f
+                  expression:
+                    simple:
+                      id: simple-f344
+                      expression: Success
